@@ -4,23 +4,17 @@ using UnityEngine;
 
 public class bullet : MonoBehaviour
 {
-    [SerializeField] private float bulletSpeed = 5f;
-    [SerializeField] private Rigidbody2D bulletRb;
+    [SerializeField] private float bulletSpeed = 50f;
+    [SerializeField] private Rigidbody bulletRb;
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-        bulletRb.velocity = Vector2.up * bulletSpeed;
+        bulletRb.velocity = transform.forward * bulletSpeed;
     }
 
     private void OnCollisionEnter()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

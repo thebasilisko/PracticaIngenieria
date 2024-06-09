@@ -7,7 +7,6 @@ namespace SojaExiles
 {
     public class PlayerMovement : MonoBehaviour
     {
-        [SerializeField] private GameObject bulletPrefab;
         [SerializeField] private float bulletOffset = 0.5f;
 
         public CharacterController controller;
@@ -36,7 +35,8 @@ namespace SojaExiles
 
             if (Input.GetMouseButtonDown(0))
             {
-                Instantiate(bulletPrefab, transform.position + Vector3.up * bulletOffset, Quaternion.identity);
+                GameObject bullet = bulletPool.Instance.RequestBullet();
+                bullet.transform.position = transform.position + new Vector3((float)(-1.5),1,0);
             }
 
         }
