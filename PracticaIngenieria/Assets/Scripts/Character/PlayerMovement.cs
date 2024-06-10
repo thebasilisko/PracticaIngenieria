@@ -33,11 +33,11 @@ namespace SojaExiles
 
             controller.Move(velocity * Time.deltaTime);
 
-            if (Input.GetMouseButtonDown(0))
+          /*  if (Input.GetMouseButtonDown(0))
             {
                 GameObject bullet = bulletPool.Instance.RequestBullet();
                 bullet.transform.position = transform.position + new Vector3((float)(-1.5),1,0);
-            }
+            }*/
 
         }
     }

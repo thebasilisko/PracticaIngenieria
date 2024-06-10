@@ -48,7 +48,7 @@ public class bulletPool : MonoBehaviour
     {
         for (int i = 0; i < poolSize; i++)
         {
-            if(!bulletList[i].activeSelf)
+            if (!bulletList[i].activeSelf)
             {
                 bulletList[i].SetActive(true);
                 Debug.Log("Bullet activated: " + i);
@@ -57,5 +57,10 @@ public class bulletPool : MonoBehaviour
         }
         Debug.Log("No bullets available in pool");
         return null;
+    }
+
+    public void ReturnBullet(GameObject bullet)
+    {
+        bullet.SetActive(false);
     }
 }
