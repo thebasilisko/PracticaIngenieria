@@ -11,11 +11,13 @@ public class MainMenuController : MonoBehaviour
     public void OnControlsButtonClicked()
     {
         GameManager.Instance.controlsUI.SetActive(true);
+        GameManager.Instance.mainMenuUI.SetActive(false);
     }
 
     public void OnBackButtonClicked()
     {
         GameManager.Instance.controlsUI.SetActive(false);
+        GameManager.Instance.mainMenuUI.SetActive(true);
     }
 }
 
