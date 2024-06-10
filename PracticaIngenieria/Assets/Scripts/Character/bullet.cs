@@ -15,6 +15,7 @@ public class bullet : MonoBehaviour
     private void OnCollisionEnter()
     {
         gameObject.SetActive(false);
+
     }
 
 }
