@@ -40,10 +40,14 @@ public class GunSystem : MonoBehaviour
                 enemy.TakeDamage(damage);
             }*/
             GameObject impactGO = bulletPool.Instance.RequestBullet();//El objeto accede a la lista del objectPool
-            impactGO.transform.position = hit.point;//Punto de impacto
-            impactGO.transform.rotation = Quaternion.LookRotation(hit.normal);//Rotación al impactar para que sea perpendicular al suelo
-            impactGO.SetActive(true);
-            StartCoroutine(DeactivateAfterTime(impactGO, 2f)); // Adjust the time as needed
+            if (impactGO != null)
+            {
+                impactGO.transform.position = hit.point; // Punto de impacto
+                impactGO.transform.rotation = Quaternion.LookRotation(hit.normal); // Rotación al impactar para que sea perpendicular al suelo
+                StartCoroutine(DeactivateAfterTime(impactGO, 2f)); // Adjust the time as needed
+            }
+
+            SoundManager.Instance.PlayShootSound(); // Reproducir el sonido de disparo
 
         }
 
