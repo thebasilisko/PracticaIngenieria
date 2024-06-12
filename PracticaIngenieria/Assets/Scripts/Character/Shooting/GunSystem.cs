@@ -34,10 +34,10 @@ public class GunSystem : MonoBehaviour
         {
             Debug.Log(hit.transform.name);//Sacamos por consola el nombre
 
-            //Enemy enemy = hit.transform.GetComponent<Enemy>(); //Enemy Damage
+            //Enemy player = hit.transform.GetComponent<Enemy>(); //Enemy Damage
             /*if (Enemy != null)
             {
-                enemy.TakeDamage(damage);
+                player.TakeDamage(damage);
             }*/
             GameObject impactGO = bulletPool.Instance.RequestBullet();//El objeto accede a la lista del objectPool
             if (impactGO != null)
@@ -47,10 +47,10 @@ public class GunSystem : MonoBehaviour
                 StartCoroutine(DeactivateAfterTime(impactGO, 2f)); // Adjust the time as needed
             }
 
-            SoundManager.Instance.PlayShootSound(); // Reproducir el sonido de disparo
+           
 
         }
-
+        SoundManager.Instance.PlayShootSound(); // Reproducir el sonido de disparo
     }
 
     private IEnumerator DeactivateAfterTime(GameObject bullet, float delay)
