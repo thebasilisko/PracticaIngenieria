@@ -18,17 +18,17 @@ public class MainMenuState : IGameState
             GameManager.Instance.controlsUI = GameObject.Find("ControlsUI");
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
+        if (GameManager.Instance.controlsUI != null)
+        {
+            GameManager.Instance.controlsUI.SetActive(false);
+        }
     }
 
     public void UpdateState(GameManager gameManager)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && !GameManager.Instance.controlsUI.activeSelf)
         {
             gameManager.SetState(new MainSceneState());
-        }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            GameManager.Instance.controlsUI.SetActive(true);
         }
     }
 

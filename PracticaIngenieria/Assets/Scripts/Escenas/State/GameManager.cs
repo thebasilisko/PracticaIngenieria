@@ -4,6 +4,12 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
+    public GameObject mainMenuUI;
+    public GameObject controlsUI;
+    public GameObject pauseMenuUI;
+
+    private IGameState currentState;
+
     public static GameManager Instance
     {
         get
@@ -22,12 +28,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public GameObject mainMenuUI;
-    public GameObject controlsUI;
-    public GameObject pauseMenuUI;
-
-    private IGameState currentState;
-
     private void Awake()
     {
         if (instance == null)
@@ -44,6 +44,9 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         SetState(new MainMenuState());
+
+        controlsUI.SetActive(false); // Desactiva el menú de controles al inicio
+
     }
 
     private void Update()
@@ -56,6 +59,7 @@ public class GameManager : MonoBehaviour
 
     public void SetState(IGameState newState)
     {
+        Debug.Log($"Changing state from {currentState?.GetType().Name} to {newState.GetType().Name}");
         if (currentState != null)
         {
             currentState.ExitState(this);
