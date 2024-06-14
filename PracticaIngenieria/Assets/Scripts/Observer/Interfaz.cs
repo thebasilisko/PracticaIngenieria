@@ -38,15 +38,20 @@ public class Interfaz : MonoBehaviour, IObserver
 
     private void Ganar()
     {
-        puntuacion.text = "Rehenes salvados: 10";
-        Debug.Log("¡Juego ganado!");
+        puntuacion.text = "¡Has salvado a todos los rehenes!";
+        juegoFinalizado = true;
+        Time.timeScale = 0; // Pausa el juego
     }
 
     private void SalvarRehen()
     {
         rehenesSalvados++;
-        puntuacion.text = "Rehenes salvados: " + rehenesSalvados.ToString() + "/10";
-        Debug.Log("Rehenes salvados: " + rehenesSalvados);
+        puntuacion.text = "Rehenes salvados: " + rehenesSalvados.ToString() + "/5";
+
+        if (rehenesSalvados == 5)
+        {
+            Ganar();
+        }
     }
 
     private void Juego()
