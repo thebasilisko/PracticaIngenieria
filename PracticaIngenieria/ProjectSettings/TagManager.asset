@@ -8,6 +8,7 @@ TagManager:
   - pausedMenuUI
   - Bullet
   - EnemyBullet
+  - Rehen
   layers:
   - Default
   - TransparentFX

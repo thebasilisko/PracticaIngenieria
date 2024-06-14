@@ -10,21 +10,14 @@ public class Interfaz : MonoBehaviour, IObserver
 
     private bool juegoFinalizado = false;
 
-    [SerializeField]
-    private AudioSource _reproductor;
-    [SerializeField]
-    private AudioClip _clipAudio;
-
-
     // Start is called before the first frame update
     void Start()
     {
         GameObject rehen = GameObject.FindGameObjectWithTag("Rehen");
         rehen.GetComponent<ISubject>().AddObserver(gameObject.GetComponent<IObserver>());
 
-        GameObject jugador = GameObject.FindGameObjectWithTag("Jugador");
+        GameObject jugador = GameObject.FindGameObjectWithTag("Player");
         jugador.GetComponent<ISubject>().AddObserver(gameObject.GetComponent<IObserver>());
-
 
     }
 
@@ -45,7 +38,7 @@ public class Interfaz : MonoBehaviour, IObserver
     private void SalvarRehen()
     {
         rehenesSalvados++;
-        puntuacion.text = "Rehenes salvados: " + puntuacion.ToString() + "/10";
+        puntuacion.text = "Rehenes salvados: " + rehenesSalvados.ToString() + "/10";
 
     }
 

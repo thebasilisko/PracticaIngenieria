@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rehen : MonoBehaviour, IObserver, ISubject,IInteractuable
+public class Rehen : MonoBehaviour, IObserver, ISubject
 {
     public int numRehenesSalvados = 0;
     private List<IObserver> observadores = new List<IObserver>();
@@ -13,7 +13,7 @@ public class Rehen : MonoBehaviour, IObserver, ISubject,IInteractuable
     {
         observadores = new List<IObserver>();
         // Se añade como observador del sujeto jugador
-        GameObject jugador = GameObject.FindGameObjectWithTag("Jugador");
+        GameObject jugador = GameObject.FindGameObjectWithTag("Player");
         jugador.GetComponent<ISubject>().AddObserver(gameObject.GetComponent<IObserver>());
 
     }
@@ -26,6 +26,7 @@ public class Rehen : MonoBehaviour, IObserver, ISubject,IInteractuable
     private void SalvarRehen()
     {
         numRehenesSalvados++;
+        gameObject.SetActive(false);
     }
 
     private void Comprobar()
@@ -58,9 +59,5 @@ public class Rehen : MonoBehaviour, IObserver, ISubject,IInteractuable
         {
             o.UpdateState(1);
         }
-    }
-    public void Interactuar()
-    {
-
     }
 }
