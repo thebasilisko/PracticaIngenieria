@@ -6,12 +6,13 @@ using UnityEngine.Pool;
 public class Opponent : MonoBehaviour
 {
     public Transform player;
-    int health = 100;
-    public Rigidbody bullet;
+    public int health;
+   // public Rigidbody bullet;
     public Transform spawner;
     bool isShoot = false;
 
     enemyPool enemyPool;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,12 +44,6 @@ public class Opponent : MonoBehaviour
             }
         }
 
-        if (health < 1)
-        {
-            this.gameObject.SetActive(false);
-        }
-
-       
     }
 
     void LookAtPlayer()
@@ -89,11 +84,28 @@ public class Opponent : MonoBehaviour
         yield return new WaitForSeconds(delay);
         bulletPool.Instance.ReturnBullet(bullet);
     }
-    public void OnTriggerEnter(Collider coll)
+
+
+   /* private void OnTriggerEnter(Collider other)
     {
-        if (coll.gameObject.tag == "Bullet")
+        Debug.Log("Trigger detectado con: " + other.gameObject.name);
+
+        // Comprueba si la colisión es con un objeto específico (por ejemplo, un objeto con el tag "Bullet")
+        if (other.CompareTag("Bullet"))
         {
-            health -= 20;
+            Debug.Log("Trigger con Bullet detectado");
+            // Reduce la salud del enemigo
+            TakeDamage(10); // Puedes ajustar el valor del daño según sea necesario
+        }
+    }*/
+
+    public void TakeDamage(int damage)
+    {
+        Debug.Log("Daño recibido");
+        health -= damage;
+        if (health < 0)
+        {
+            Destroy(this.gameObject);
         }
     }
 }
