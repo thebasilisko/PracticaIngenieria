@@ -5,6 +5,7 @@ public class Rehen : MonoBehaviour, IObserver, ISubject
 {
     public int numRehenesSalvados = 0;
     private List<IObserver> observadores = new List<IObserver>();
+    private bool salvado = false;
 
     private void Start()
     {
@@ -27,9 +28,13 @@ public class Rehen : MonoBehaviour, IObserver, ISubject
 
     private void SalvarRehen()
     {
-        numRehenesSalvados++;
-        gameObject.SetActive(false);
-        NotifyObservers();
+        if (!salvado)
+        {
+            salvado = true;
+            numRehenesSalvados++;
+            gameObject.SetActive(false);
+            NotifyObservers();
+        }
     }
 
     private void Comprobar()
