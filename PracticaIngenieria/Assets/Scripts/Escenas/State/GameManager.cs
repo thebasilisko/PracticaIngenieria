@@ -45,8 +45,6 @@ public class GameManager : MonoBehaviour
     {
         SetState(new MainMenuState());
 
-        controlsUI.SetActive(false); // Desactiva el menú de controles al inicio
-
     }
 
     private void Update()
