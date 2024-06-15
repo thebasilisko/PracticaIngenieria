@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -34,19 +33,38 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            Debug.Log("GameManager instance created");
         }
         else if (instance != this)
         {
             Destroy(gameObject);
+            Debug.Log("Duplicate GameManager instance destroyed");
         }
     }
 
     private void Start()
     {
+        if (controlsUI != null)
+        {
+            controlsUI.SetActive(false); // Desactiva el menú de controles al inicio si está asignado
+            Debug.Log("Controls UI deactivated");
+        }
+        else
+        {
+            Debug.LogWarning("Controls UI is not assigned!");
+        }
+
+        if (pauseMenuUI != null)
+        {
+            pauseMenuUI.SetActive(false);
+            Debug.Log("PauseMenuUI is assigned");
+        }
+        else
+        {
+            Debug.LogError("PauseMenuUI is not assigned in the Inspector!");
+        }
+
         SetState(new MainMenuState());
-
-        controlsUI.SetActive(false); // Desactiva el menú de controles al inicio
-
     }
 
     private void Update()
@@ -59,13 +77,15 @@ public class GameManager : MonoBehaviour
 
     public void SetState(IGameState newState)
     {
-        Debug.Log($"Changing state from {currentState?.GetType().Name} to {newState.GetType().Name}");
         if (currentState != null)
         {
             currentState.ExitState(this);
         }
         currentState = newState;
-        currentState.EnterState(this);
+        if (currentState != null)
+        {
+            currentState.EnterState(this);
+        }
     }
 
     public bool PlayerHasLost()
@@ -80,5 +100,8 @@ public class GameManager : MonoBehaviour
         return false;
     }
 }
+
+
+
 
 

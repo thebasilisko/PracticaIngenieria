@@ -29,14 +29,15 @@ public class MainSceneState : IGameState
         if (scene.name == "MainScene")
         {
             GameManager.Instance.pauseMenuUI = GameObject.Find("PauseMenuUI");
-
-            // Asegúrate de que el menú de pausa esté desactivado al cargar la escena
             if (GameManager.Instance.pauseMenuUI != null)
             {
                 GameManager.Instance.pauseMenuUI.SetActive(false);
                 Debug.Log("Pause menu found and deactivated in MainScene");
             }
-
+            else
+            {
+                Debug.LogError("Pause menu UI is null in MainScene!");
+            }
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
     }
@@ -68,4 +69,7 @@ public class MainSceneState : IGameState
         }
     }
 }
+
+
+
 

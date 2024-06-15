@@ -4,11 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - pauseMenu
   - pausedMenuUI
   - Bullet
   - EnemyBullet
   - Rehen
+  - PauseMenuUI
   layers:
   - Default
   - TransparentFX

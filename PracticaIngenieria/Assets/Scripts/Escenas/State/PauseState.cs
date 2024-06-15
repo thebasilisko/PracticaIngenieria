@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 public class PauseState : IGameState
 {
     public void EnterState(GameManager gameManager)
@@ -9,6 +9,10 @@ public class PauseState : IGameState
         {
             GameManager.Instance.pauseMenuUI.SetActive(true);
             Debug.Log("Pause menu activated");
+        }
+        else
+        {
+            Debug.LogError("Pause menu UI is null in PauseState!");
         }
         Time.timeScale = 0f; // Pausa el juego
         Debug.Log("Time.timeScale set to 0");
@@ -31,9 +35,15 @@ public class PauseState : IGameState
             GameManager.Instance.pauseMenuUI.SetActive(false);
             Debug.Log("Pause menu deactivated");
         }
+        else
+        {
+            Debug.LogError("Pause menu UI is null in PauseState exit!");
+        }
         Time.timeScale = 1f; // Reanuda el juego
         Debug.Log("Time.timeScale set to 1");
     }
-
 }
+
+
+
 
