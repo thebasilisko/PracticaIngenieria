@@ -7,21 +7,27 @@ public class Interfaz : MonoBehaviour, IObserver
 {
     public TMP_Text puntuacion;
     private int rehenesSalvados;
-
     private bool juegoFinalizado = false;
 
-    // Start is called before the first frame update
     void Start()
     {
-        GameObject rehen = GameObject.FindGameObjectWithTag("Rehen");
-        rehen.GetComponent<ISubject>().AddObserver(gameObject.GetComponent<IObserver>());
+        GameObject[] rehenes = GameObject.FindGameObjectsWithTag("Rehen");
+        foreach (GameObject rehen in rehenes)
+        {
+            rehen.GetComponent<ISubject>().AddObserver(this);
+        }
 
         GameObject jugador = GameObject.FindGameObjectWithTag("Player");
-        jugador.GetComponent<ISubject>().AddObserver(gameObject.GetComponent<IObserver>());
-
+        if (jugador != null)
+        {
+            jugador.GetComponent<ISubject>().AddObserver(this);
+        }
+        else
+        {
+            Debug.LogWarning("No se encontró ningún objeto con la etiqueta 'Player'.");
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!juegoFinalizado)
@@ -32,14 +38,20 @@ public class Interfaz : MonoBehaviour, IObserver
 
     private void Ganar()
     {
-        puntuacion.text = "Rehenes salvados: 10";
+        puntuacion.text = "¡Has salvado a todos los rehenes!";
+        juegoFinalizado = true;
+        Time.timeScale = 0; // Pausa el juego
     }
 
     private void SalvarRehen()
     {
         rehenesSalvados++;
-        puntuacion.text = "Rehenes salvados: " + rehenesSalvados.ToString() + "/10";
+        puntuacion.text = "Rehenes salvados: " + rehenesSalvados.ToString() + "/5";
 
+        if (rehenesSalvados == 5)
+        {
+            Ganar();
+        }
     }
 
     private void Juego()
@@ -47,11 +59,13 @@ public class Interfaz : MonoBehaviour, IObserver
         if (rehenesSalvados == 10)
         {
             juegoFinalizado = true;
+            Ganar();
         }
     }
 
     public void UpdateState(int id)
     {
+        Debug.Log("Interfaz recibio UpdateState con id: " + id);
         if (id == 0)
         {
             SalvarRehen();
