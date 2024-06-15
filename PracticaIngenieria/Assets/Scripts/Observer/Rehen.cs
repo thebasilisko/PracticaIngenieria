@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,20 +7,15 @@ public class Rehen : MonoBehaviour, IObserver, ISubject
 {
     public int numRehenesSalvados = 0;
     private List<IObserver> observadores = new List<IObserver>();
-    private bool salvado = false;
+
 
     private void Start()
     {
+        observadores = new List<IObserver>();
         // Se añade como observador del sujeto jugador
         GameObject jugador = GameObject.FindGameObjectWithTag("Player");
-        if (jugador != null)
-        {
-            jugador.GetComponent<ISubject>().AddObserver(this);
-        }
-        else
-        {
-            Debug.LogWarning("No se encontró ningún objeto con la etiqueta 'Player'.");
-        }
+        jugador.GetComponent<ISubject>().AddObserver(gameObject.GetComponent<IObserver>());
+
     }
 
     private void Update()
@@ -28,29 +25,21 @@ public class Rehen : MonoBehaviour, IObserver, ISubject
 
     private void SalvarRehen()
     {
-        if (!salvado)
-        {
-            salvado = true;
-            numRehenesSalvados++;
-            gameObject.SetActive(false);
-            NotifyObservers();
-        }
+        numRehenesSalvados++;
+        gameObject.SetActive(false);
     }
 
     private void Comprobar()
     {
         if (numRehenesSalvados == 10)
         {
-            foreach (IObserver o in observadores)
-            {
-                o.UpdateState(1);
-            }
+            Destroy(gameObject, 0.1f);
+            NotifyObservers();
         }
     }
 
     public void UpdateState(int id)
     {
-        Debug.Log("Rehen actualizando estado con id: " + id);
         SalvarRehen();
     }
 
@@ -68,7 +57,7 @@ public class Rehen : MonoBehaviour, IObserver, ISubject
     {
         foreach (IObserver o in observadores)
         {
-            o.UpdateState(0);
+            o.UpdateState(1);
         }
     }
 }

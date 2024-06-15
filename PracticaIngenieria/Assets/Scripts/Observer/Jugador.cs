@@ -1,16 +1,19 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Jugador : MonoBehaviour, ISubject
 {
     private List<IObserver> observadores = new List<IObserver>();
     private IObserver rehenActual;
-
+    // Start is called before the first frame update
     void Start()
     {
-        // Inicialización adicional si es necesaria
+        
     }
 
+    // Update is called once per frame
     void Update()
     {
         if (!GameManager.Instance.pauseMenuUI)
@@ -21,10 +24,9 @@ public class Jugador : MonoBehaviour, ISubject
 
     private void Controles()
     {
-        if (Input.GetKeyDown(KeyCode.E) && rehenActual != null)
+        if (Input.GetKeyDown(KeyCode.E)&&rehenActual!=null)
         {
-            Debug.Log("Tecla E pulsada y rehenActual no es nulo. Notificando observador actual.");
-            NotifyObserver(rehenActual);
+            NotifyObservers();
         }
     }
 
@@ -32,7 +34,6 @@ public class Jugador : MonoBehaviour, ISubject
     {
         if (other.gameObject.CompareTag("Rehen"))
         {
-            Debug.Log("Rehen detectado en OnTriggerEnter.");
             rehenActual = other.gameObject.GetComponent<IObserver>();
             AddObserver(rehenActual);
         }
@@ -42,7 +43,6 @@ public class Jugador : MonoBehaviour, ISubject
     {
         if (other.gameObject.CompareTag("Rehen"))
         {
-            Debug.Log("Rehen saliendo del área de colisión en OnTriggerExit.");
             RemoveObserver(rehenActual);
             rehenActual = null;
         }
@@ -50,31 +50,17 @@ public class Jugador : MonoBehaviour, ISubject
 
     public void AddObserver(IObserver o)
     {
-        if (!observadores.Contains(o))
-        {
-            observadores.Add(o);
-        }
+        observadores.Add(o);
     }
 
     public void RemoveObserver(IObserver o)
     {
-        if (observadores.Contains(o))
-        {
-            observadores.Remove(o);
-        }
+        observadores.Remove(o);
     }
 
     public void NotifyObservers()
     {
         foreach (IObserver observer in observadores)
-        {
-            observer.UpdateState(0);
-        }
-    }
-
-    public void NotifyObserver(IObserver observer)
-    {
-        if (observer != null)
         {
             observer.UpdateState(0);
         }
